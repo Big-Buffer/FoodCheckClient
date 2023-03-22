@@ -1,0 +1,2 @@
+# FoodCheckClient
+基于SpringBoot+uniapp的配料表识别爬取小程序的设计与实现
