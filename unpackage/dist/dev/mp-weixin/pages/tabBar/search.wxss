@@ -1,0 +1,16 @@
+@import "../../nvue.wxss";
+/* 水平间距 */
+/* 水平间距 */
+.midViewStyle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.center {
+  height: 100%;
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

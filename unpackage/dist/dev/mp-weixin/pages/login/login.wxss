@@ -1,0 +1,13 @@
+/* 水平间距 */
+/* 水平间距 */
+.login-register.data-v-e4e4508d {
+  padding: 20rpx 50rpx;
+}
+.button-login.data-v-e4e4508d {
+  margin-top: 100rpx;
+}
+.title.data-v-e4e4508d {
+  font-size: 40rpx;
+  font-weight: 600;
+  margin-bottom: 50rpx;
+}

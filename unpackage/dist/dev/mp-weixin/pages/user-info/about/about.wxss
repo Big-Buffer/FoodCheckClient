@@ -1,0 +1,19 @@
+@import "../../../nvue.wxss";
+/* 水平间距 */
+/* 水平间距 */
+.center {
+  height: 100%;
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.container {
+  width: 220px;
+  height: 120px;
+}
+.bland {
+  height: 100px;
+  background-color: aliceblue;
+}

@@ -1,0 +1,88 @@
+<template>
+	<view  class="uni-container">
+		<uni-list v-for="(item, index) in data" :key="index">
+			<uni-list-item clickable="true" @click="goDetailPage(item)">
+				<template v-slot:body>
+					<view class="slot-box">
+						<text class="slot-text">{{index + 1}}. {{item.name}}</text>
+					</view>
+				</template>
+			</uni-list-item>
+		</uni-list>
+		<!-- <view class="uni-panel" v-for="(item, index) in data">
+			<view :class="'list-' + index%2" @click="goDetailPage(item)">
+				<text>{{index + 1}}. {{item.name}}</text>
+			</view>
+		</view> -->
+	</view>
+	
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				data: "",
+			}
+		},
+		methods: {
+			getTop10() {
+				
+			},
+			goDetailPage(detail) {
+				const url = '/pages/ranking-list/detail/detail?value=' + encodeURIComponent(JSON.stringify(detail))
+				if (this.hasLeftWin) {
+					uni.reLaunch({
+						url: url
+					})
+				} else {
+					uni.navigateTo({
+						url: url
+					})
+				}
+			}
+		},
+		onShow() {
+			uni.request({
+				url: 'http://shenmegui1987.xyz:1987/rank/top10', 
+				method:'GET',
+				success: (res) => {
+					this.data = res.data.top10;
+					console.log(JSON.stringify(res.data.top10))
+				}
+			});
+		}
+	}
+</script>
+
+<style>
+	@import '../../common/uni-nvue.css';
+	.list-0{
+			 background-color: #aaaaff;
+		  }
+	.list-1{
+		 background-color: #ffaa7f;
+	}
+	.slot-box {
+		/* #ifndef APP-NVUE */
+		display: flex;
+		/* #endif */
+		flex-direction: row;
+		align-items: center;
+	}
+	
+	.slot-image {
+		/* #ifndef APP-NVUE */
+		display: block;
+		/* #endif */
+		margin-right: 10px;
+		width: 30px;
+		height: 30px;
+	}
+	
+	.slot-text {
+		flex: 1;
+		font-size: 14px;
+		margin-right: 10px;
+	}
+</style>

@@ -1,0 +1,24 @@
+/* 水平间距 */
+/* 水平间距 */
+.login {
+  display: flex;
+  flex-direction: column;
+  padding: 100rpx;
+}
+.login .logo {
+  width: 230rpx;
+  height: 230rpx;
+  margin: 50rpx auto;
+}
+.login .txt1 {
+  margin-bottom: 10rpx;
+}
+.login .txt2 {
+  color: #999;
+  margin-bottom: 50rpx;
+}
+.login .txt3 {
+  color: #8c8c8c;
+  margin-top: 30rpx;
+  text-align: center;
+}

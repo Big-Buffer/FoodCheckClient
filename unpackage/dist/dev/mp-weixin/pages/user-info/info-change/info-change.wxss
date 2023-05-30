@@ -1,0 +1,34 @@
+@import "../../../nvue.wxss";
+
+.info-container.data-v-62dbc99f {
+		padding: 20rpx;
+		margin-top: 10rpx;
+}
+.out-btn.data-v-62dbc99f {
+		margin: 40rpx 30rpx;
+}
+.slot-box.data-v-62dbc99f {
+
+		display: flex;
+
+		flex-direction: row;
+		align-items: center;
+}
+.slot-image.data-v-62dbc99f {
+
+		display: block;
+
+		margin-right: 10px;
+		width: 30px;
+		height: 30px;
+}
+.slot-text.data-v-62dbc99f {
+		flex: 1;
+		font-size: 14px;
+		margin-right: 10px;
+}
+.slot-input.data-v-62dbc99f {
+		flex: 1;
+		font-size: 14px;
+		text-align: right;
+}

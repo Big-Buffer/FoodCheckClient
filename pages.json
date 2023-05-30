@@ -1,0 +1,179 @@
+{
+	"pages": [{
+			"path": "pages/tabBar/search",
+			"style": {
+				"navigationBarTitleText": "搜索",
+				"app-plus": {
+					"bounce": "vertical",
+					"titleNView": {
+						"buttons": [{
+							"text": "\ue534",
+
+							"fontSize": "22px",
+							"color": "#FFFFFF"
+						}]
+					}
+				}
+			}
+		}, {
+			"path": "pages/tabBar/ranking-list",
+			"style": {
+				"navigationBarTitleText": "排行榜",
+				"app-plus": {
+					"bounce": "vertical",
+					"titleNView": {
+						"buttons": [{
+							"text": "\ue534",
+
+							"fontSize": "22px",
+							"color": "#FFFFFF"
+						}]
+					}
+				}
+			}
+
+		}, {
+			"path": "pages/tabBar/user-info",
+			"style": {
+				"navigationBarTitleText": "个人",
+				"app-plus": {
+					"bounce": "vertical",
+					"titleNView": {
+						"buttons": [{
+							"text": "\ue534",
+
+							"fontSize": "22px",
+							"color": "#FFFFFF"
+						}]
+					}
+				}
+			}
+
+		}, {
+			"path": "pages/user-info/info-change/info-change",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/user-info/record/record",
+			"style": {
+				"navigationBarTitleText": "搜索记录",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/user-info/collection/collection",
+			"style": {
+				"navigationBarTitleText": "我的收藏",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/user-info/about/about",
+			"style": {
+				"navigationBarTitleText": "关于",
+				"enablePullDownRefresh": false
+			}
+
+		}
+
+		, {
+			"path": "pages/search/detail/detail",
+			"style": {
+				"navigationBarTitleText": "搜索结果",
+				"app-plus": {
+					"titleNView": {
+						"buttons": [{
+							"type": "share"
+						}, {
+							"type": "favorite"
+						}]
+					}
+				}
+			}
+
+		}, {
+			"path": "pages/ranking-list/detail/detail",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}
+		// , {
+		// 	"path": "pages/test/test",
+		// 	"style": {
+		// 		"navigationBarTitleText": "",
+		// 		"enablePullDownRefresh": false
+		// 	}
+
+		// }
+	    ,{
+            "path" : "pages/login/login",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/login/weixin",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/user-info/record/detail/detail",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "记录详情",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8",
+		"app-plus": {
+			"background": "#efeff4"
+		}
+	},
+
+	"tabBar": {
+		"color": "#7A7E83",
+		"selectedColor": "#007AFF",
+		"borderStyle": "black",
+		"backgroundColor": "#F8F8F8",
+		"list": [{
+				"pagePath": "pages/tabBar/search",
+				"text": "搜索",
+				"iconPath": "/static/icons/search-0.png",
+				"selectedIconPath": "static/icons/search-1.png"
+			},
+			{
+				"pagePath": "pages/tabBar/ranking-list",
+				"text": "排行榜",
+				"iconPath": "static/icons/ranking-0.png",
+				"selectedIconPath": "static/icons/ranking-1.png"
+			}, {
+				"pagePath": "pages/tabBar/user-info",
+				"text": "个人",
+				"iconPath": "static/icons/mine-0.png",
+				"selectedIconPath": "static/icons/mine-1.png"
+			}
+			// , {
+			// 	"pagePath": "pages/test/test",
+			// 	"text": "测试"
+			// }
+		]
+	}
+}

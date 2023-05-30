@@ -1,0 +1,55 @@
+{
+    "pages": [
+        "pages/tabBar/search",
+        "pages/tabBar/ranking-list",
+        "pages/tabBar/user-info",
+        "pages/user-info/info-change/info-change",
+        "pages/user-info/record/record",
+        "pages/user-info/collection/collection",
+        "pages/user-info/about/about",
+        "pages/search/detail/detail",
+        "pages/ranking-list/detail/detail",
+        "pages/login/login",
+        "pages/login/weixin",
+        "pages/user-info/record/detail/detail"
+    ],
+    "window": {
+        "navigationBarTextStyle": "black",
+        "navigationBarTitleText": "uni-app",
+        "navigationBarBackgroundColor": "#F8F8F8",
+        "backgroundColor": "#F8F8F8"
+    },
+    "tabBar": {
+        "color": "#7A7E83",
+        "selectedColor": "#007AFF",
+        "borderStyle": "black",
+        "backgroundColor": "#F8F8F8",
+        "list": [
+            {
+                "pagePath": "pages/tabBar/search",
+                "text": "搜索",
+                "iconPath": "/static/icons/search-0.png",
+                "selectedIconPath": "static/icons/search-1.png"
+            },
+            {
+                "pagePath": "pages/tabBar/ranking-list",
+                "text": "排行榜",
+                "iconPath": "static/icons/ranking-0.png",
+                "selectedIconPath": "static/icons/ranking-1.png"
+            },
+            {
+                "pagePath": "pages/tabBar/user-info",
+                "text": "个人",
+                "iconPath": "static/icons/mine-0.png",
+                "selectedIconPath": "static/icons/mine-1.png"
+            }
+        ]
+    },
+    "permission": {
+        "scope.userLocation": {
+            "desc": "获取用户位置信息"
+        }
+    },
+    "usingComponents": {},
+    "sitemapLocation": "sitemap.json"
+}

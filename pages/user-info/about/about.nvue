@@ -1,0 +1,43 @@
+<template>
+	<view class="center">
+		<image class="logo" :src="logo" style="width: 180rpx;height: 180rpx;margin: 50rpx;"></image>
+		<view style="margin-bottom: 50rpx;">
+			Copyright © 2023-{{}} Cc.
+		</view>
+		<view style="margin-bottom: 20rpx;">All Rights Reserved</view>
+		<view>email:2397651454@qq.com</view>
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				year: 2023,
+				logo: "/static/logo.png",
+			}
+		},
+		onShow() {
+			
+		}
+	}
+</script>
+
+<style lang="scss">
+.center {
+	height: 100%;
+	flex: auto;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+.container {
+	width: 220px;
+	height: 120px;
+}
+.bland {
+	height: 100px;
+	background-color: aliceblue;
+}
+</style>

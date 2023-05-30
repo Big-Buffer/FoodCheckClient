@@ -1,0 +1,105 @@
+<template>
+	<view class="container">
+		<view v-if="data.length != 0">
+			<uni-section :title="item.name" type="line" v-for="(item, index) in data" :key="index">
+				<uni-list>
+					<uni-list-item :title="compounds[index]"  @longpress="onLongPress(index)" @tap="tab(index)"></uni-list-item>
+				</uni-list>
+			</uni-section>
+		</view>
+		<view v-else>
+			<view class="uni-box-head">
+				<uni-title type="h3" align="center" title="暂时没有记录"></uni-title>
+			</view>
+		</view>
+	</view>
+</template>
+<script>
+	export default {
+		data() {
+			return {
+				data: [],
+				title: 'nav-button',
+				keyword: "",
+				pic: "",
+				compounds: []
+			}
+		},
+		methods: {
+			// 长按删除
+			onLongPress(index) {
+				let token = uni.getStorageSync("token");
+				let da = this.data[index];
+				let that = this;
+				console.log(da)
+			    uni.showModal({    // 弹框询问是否进行下一步事件
+			        title: '提示',
+			        content: '是否删除该记录',
+			        success: function(res) {
+			            if (res.confirm) {
+			                console.log('用户点击确定');
+							uni.request({
+								url: 'http://shenmegui1987.xyz:1987/user/deleteRecord',
+								method: 'POST',
+								header: {
+									'Content-Type': 'application/json',
+									"token": token
+								},
+								data: JSON.stringify(da),
+								success: (res) => {
+									that.data.splice(index, 1);
+									that.compounds.splice(index, 1);
+									// console.log(that.data);
+									uni.showToast({
+										title: "删除成功"
+									})
+								}
+							});
+			            } else if (res.cancel) {
+			                uni.showToast({
+			                	title: "已取消"
+			                })
+			            }
+			        }
+			    });
+			},
+			tab(index) {
+				// console.log(index)
+				uni.navigateTo({
+					url: '/pages/user-info/record/detail/detail?data=' + encodeURIComponent(JSON.stringify(this.data[index]))
+				});
+			}
+		},
+		onNavigationBarButtonTap(e) {
+			e.index === 0 ? this.$refs.share.open() : this.$refs.inputDialog.open()
+		},
+		onShow(option) {
+			let token = uni.getStorageSync("token");
+			uni.request({
+				url: 'http://shenmegui1987.xyz:1987/user/getRecords',
+				method: 'POST',
+				header: {
+					'Content-Type': 'application/x-www-form-urlencoded',
+					"token": token
+				},
+				success: (res) => {
+					this.data = res.data.data;
+					for (let i = 0; i < this.data.length; i++) {
+						let str = "";
+						for (let j = 0; j < this.data[i].compounds.length; j++) {
+							str += this.data[i].compounds[j].name 
+							str += "，"
+						}
+						str = str.slice(0, -1);
+						this.compounds.push(str);
+					}
+					// console.log("requset:" + JSON.stringify(this.data))
+				}
+			});
+		}
+	}
+</script>
+
+<style>
+
+</style>

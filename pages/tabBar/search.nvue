@@ -1,0 +1,220 @@
+<template>
+	<view class="center">
+		<uni-row>
+			<uni-col :span="18">
+				<view>
+					<uni-search-bar placeholder="请输入配料名" @confirm="search" radius="100" v-model="searchValue"
+						bgColor="#e5e5e5" clearButton="auto" cancelButton="none" maxlength="100">
+					</uni-search-bar>
+				</view>
+			</uni-col>
+			<uni-col :span="6">
+				<view>
+					<uni-icons type="camera" size="60" @click="photo" />
+				</view>
+			</uni-col>
+		</uni-row>
+	</view>
+
+</template>
+<script>
+import searchNvue from './search.nvue';
+	export default {
+		data() {
+			return {
+				searchValue: '',
+				searchResult: []
+			}
+		},
+		methods: {
+			search(res) {
+				let that = this;
+				let keyword = res.value;
+				if(keyword.replaceAll(' ', '')==''){
+					this.searchValue = ''
+					uni.showToast({
+						title:"请输入搜索内容",
+						icon:"none"
+					})
+				}else{
+					// 隐藏软键盘
+					uni.hideKeyboard();
+					uni.showLoading({
+						title: '加载中...',
+						mask: false
+					});
+					let token = uni.getStorageSync("token");
+					if (token !== "") {
+						uni.request({
+							url: 'http://shenmegui1987.xyz:1987/search/keyword',
+							method:'POST',
+							header:{
+								'Content-Type': 'application/x-www-form-urlencoded',
+								"token": token
+							},
+							data:{
+								"keyword": keyword
+							},
+							success: (res) => {
+								uni.hideLoading()
+								that.searchResult = res.data.data;
+								// console.log("requset:" + JSON.stringify(that.searchResult))
+								
+								const url = '/pages/search/detail/detail?data=' + encodeURIComponent(JSON.stringify(that.searchResult))
+								console.log(url)
+								uni.navigateTo({
+									url: url,
+								})
+							}
+						});
+					} else {
+						uni.request({
+							url: 'http://shenmegui1987.xyz:1987/search/keyword',
+							method:'GET',
+							data:{
+								"keyword": keyword
+							},
+							success: (res) => {
+								uni.hideLoading()
+								this.searchResult = res.data.data;
+								// console.log("requset:" + JSON.stringify(that.searchResult))
+								const url = '/pages/search/detail/detail?data=' + encodeURIComponent(JSON.stringify(this.searchResult))
+								// console.log(url)
+								uni.navigateTo({
+									url: url,
+								})
+							},
+							complete() {
+								uni.hideLoading()
+							}
+						});
+					}
+				}
+				
+				setTimeout(()=>{
+					//隐藏loading
+					uni.hideLoading()
+				},3000)
+				
+			},
+			photo() {
+				let that = this;
+				let token = uni.getStorageSync("token");
+				uni.chooseImage({
+					count: 9,
+					sizeType: ['original'],
+					sourceType: ['album', 'camera'],
+					success: function(res) {
+						uni.showLoading({
+							mask: true,
+							title: "图片上传中"
+						})
+						if (token !== "") {
+							uni.uploadFile({
+								url: 'http://shenmegui1987.xyz:1987/search/img',
+								timeout: 60000,
+								filePath: res.tempFilePaths[0],
+								name: 'Image',
+								header: {"token": token},
+								success: (res) => {
+									console.log("complete:" + JSON.stringify(JSON.parse(res.data)))
+									that.searchResult = JSON.parse(res.data);
+									// console.log("requset:" + JSON.stringify(that.searchResult))
+									const url = '/pages/search/detail/detail?data=' + encodeURIComponent(JSON.stringify(that.searchResult.data))
+									// console.log(url)
+									uni.navigateTo({
+										url: url,
+									})
+									
+								},
+								fail: (res) => {
+									console.log(res.data);
+									uni.hideLoading();
+									uni.showToast({
+										icon:'error',
+										title: res.data.msg
+									})
+								},
+								complete: (res) => {
+									uni.hideLoading();
+									if (res.data.status !== 200){
+										uni.showToast({
+											icon:'error',
+											title: res.data.msg
+										})
+									}
+									
+								}
+								// complete: (res) => {
+								// 	console.log("complete:" + res)
+								// }
+							});
+						} else {
+							uni.uploadFile({
+								url: 'http://shenmegui1987.xyz:1987/search/img',
+								timeout: 60000,
+								filePath: res.tempFilePaths[0],
+								name: 'Image',
+								success: (res) => {
+									console.log("complete:" + JSON.stringify(JSON.parse(res.data)))
+									that.searchResult = JSON.parse(res.data);
+									// console.log("requset:" + JSON.stringify(that.searchResult))
+									const url = '/pages/search/detail/detail?data=' + encodeURIComponent(JSON.stringify(that.searchResult.data))
+									// console.log(url)
+									uni.navigateTo({
+										url: url,
+									})
+								},
+								fail: (res) => {
+									console.log(res.data);
+									uni.hideLoading();
+									uni.showToast({
+										title: res.data.msg
+									})
+								},
+								complete: (res) => {
+									uni.hideLoading();
+									if (res.data.status == 500){
+										uni.showToast({
+											title: res.data.msg
+										})
+									}
+									
+								}
+								// complete: (res) => {
+								// 	console.log("complete:" + res)
+								// }
+							});
+						}
+						
+					}
+				});
+			}
+		},
+
+		onBackPress() {
+			// #ifdef APP-PLUS
+			plus.key.hideSoftKeybord();
+			// #endif
+		},
+		onShow() {
+			this.searchValue = ''
+		}
+	}
+</script>
+<style lang="scss">
+	.midViewStyle {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.center {
+		height: 100%;
+		flex: auto;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+</style>

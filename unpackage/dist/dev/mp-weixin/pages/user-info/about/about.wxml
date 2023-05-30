@@ -1,0 +1,1 @@
+<view class="center"><image class="logo" src="{{a}}" style="width:180rpx;height:180rpx;margin:50rpx"></image><view style="margin-bottom:50rpx"> Copyright © 2023-{{b}} Cc. </view><view style="margin-bottom:20rpx">All Rights Reserved</view><view>email:2397651454@qq.com</view></view>

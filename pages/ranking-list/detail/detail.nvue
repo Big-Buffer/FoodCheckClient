@@ -1,0 +1,46 @@
+<template>
+	
+	<view class="uni-box-head">
+		<uni-title type="h1" align="center" :title="data.name"></uni-title>
+	</view>
+	
+	<uni-list>
+		<uni-list-item :title="'英文名：' + (data.en_name == null ? '无' : data.en_name)"></uni-list-item>
+		<uni-list-item :title="'作用：' + (data.function == null ? '无' : data.function)"></uni-list-item>
+		<uni-list-item :title="'简介：' + (data.introduction == null ? '无' : data.introduction)"></uni-list-item>
+	</uni-list>
+	
+	
+</template>
+<script>
+	export default {
+		data() {
+			return {
+				data:{
+					name: "",
+					en_name: "",
+					function: "",
+					introduction: ""
+				},
+				title: 'nav-button',
+				keyword: "",
+				pic: ""
+			}
+		},
+		onNavigationBarButtonTap(e) {
+			e.index === 0 ? this.$refs.share.open() : this.$refs.inputDialog.open()
+		},
+		onLoad(option){
+			console.log('上一个页面传递过来的参数', JSON.parse(decodeURIComponent(option.value)))
+			option = JSON.parse(decodeURIComponent(option.value))
+			this.data.name = option.name
+			this.data.en_name = option.enName
+			this.data.function = option.func
+			this.data.introduction = option.introduction
+		}
+	}
+</script>
+
+<style>
+	
+</style>

@@ -1,0 +1,108 @@
+@import "../../nvue.wxss";
+
+page {
+ 		background-color: #f5f5f5;
+}
+ 
+/* 水平间距 */
+/* 水平间距 */
+.head.data-v-f24973ab {
+  padding: 20rpx;
+  background-color: #fff;
+  margin-bottom: 20rpx;
+}
+.head .sub-txt.data-v-f24973ab {
+  font-size: 24rpx;
+  color: #616161;
+  display: block;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+}
+.userinfo.data-v-f24973ab {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+}
+.userinfo .username.data-v-f24973ab {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20rpx;
+}
+.grid-text.data-v-f24973ab {
+  color: #999;
+  font-size: 12px;
+  margin-bottom: 20rpx;
+}
+.userinfo u-avatar.data-v-f24973ab {
+  margin-right: 20rpx;
+}
+.userinfo .arrow-right.data-v-f24973ab {
+  margin-left: auto;
+}
+.btn-login.data-v-f24973ab {
+  margin: 40rpx 0;
+}
+.gn-icon.data-v-f24973ab {
+  width: 60rpx;
+  height: 60rpx;
+  margin-bottom: 20rpx;
+}
+
+/*服务按钮*/
+.btn-wrap.data-v-f24973ab {
+  display: flex;
+  margin-top: 30rpx;
+}
+.btn-wrap .btn-contact.data-v-f24973ab {
+  background-color: #fff;
+  margin-left: 15rpx;
+  margin-right: 15rpx;
+  padding: 20rpx;
+  line-height: unset;
+  font-size: 12px;
+  color: #999;
+}
+.btn-wrap .btn-contact.data-v-f24973ab:active {
+  background-color: #f5f5f5;
+}
+.btn-wrap .btn-contact .txt.data-v-f24973ab {
+  margin-top: 20rpx;
+}
+.btn-wrap .btn-contact.data-v-f24973ab::after {
+  border: unset;
+  position: unset;
+}
+.icon-size.data-v-f24973ab {
+  font-size: 50rpx;
+}
+.block-wrap.data-v-f24973ab {
+  background-color: #fff;
+  border-radius: 20rpx;
+  margin: 20rpx;
+  overflow: hidden;
+}
+.block-wrap .block-title.data-v-f24973ab {
+  background-color: #fff;
+  padding: 20rpx;
+}
+.column.data-v-f24973ab {
+  width: 702rpx;
+  height: 182rpx;
+  margin: 17rpx auto;
+  padding-left: 25rpx;
+  padding-top: 35rpx;
+  line-height: 42rpx;
+  letter-spacing: 4rpx;
+  border-radius: 10rpx;
+}
+.column .title.data-v-f24973ab {
+  color: #ffffff;
+  font-size: 31rpx;
+}
+.column .txt.data-v-f24973ab {
+  width: 426rpx;
+  font-size: 25rpx;
+  color: #E6E6E6;
+}

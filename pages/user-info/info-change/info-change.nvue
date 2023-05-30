@@ -1,0 +1,258 @@
+<template>
+	<view>
+		<uni-list>
+			<uni-list-item>
+				<template v-slot:body>
+					<text class="slot-box slot-text">头像</text>
+				</template>
+				<template v-slot:footer>
+					<image class="slot-image" :src="userInfo.avatar + '?key=' + time" mode="widthFix" @click="onAvatar"></image>
+				</template>
+			</uni-list-item>
+			
+			<uni-list-item showArrow rightText>
+				<template v-slot:body>
+					<text class="slot-box slot-text">昵称</text>
+				</template>
+				<template v-slot:footer>
+					<input class="slot-input" :placeholder="userInfo.username"  input-align="right" v-model="nickname" placeholder-style="text-align: right;" @blur="blur(nickname, 'nickname')"/>
+				</template>
+			</uni-list-item>
+		</uni-list>
+		<!-- #ifdef H5 -->
+		<uni-list style="margin-top: 30rpx;">
+			<uni-list-item showArrow rightText clickable @click="toChangePW()">
+				<template v-slot:body>
+					<text class="slot-box slot-text">修改密码</text>
+				</template>
+			</uni-list-item>
+		</uni-list>
+		<!-- #endif -->
+		
+
+		<button type="warn" @click="outlogin" :custom-style="btnStyle" style="margin-top: 150rpx;">退出登录</button>
+		
+	</view>
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				time: new Date().getTime(),
+				btnStyle: {
+					color: "#fff",
+					backgroundColor: '#333333'
+				},
+				nickname: "",
+				form: {},
+				userInfo: {},
+				showGender: false,
+				gender: [{
+						value: 1,
+						label: "男"
+					},
+					{
+						value: 2,
+						label: "女"
+					},
+					{
+						value: 0,
+						label: "保密"
+					}
+				]
+			};
+		},
+		onShow(options) {
+			if (uni.getStorageSync('userInfo') !== "") {
+				console.log("有userinfo")
+				this.hasLogin = true;
+				this.userInfo = uni.getStorageSync('userInfo')
+			} else if (uni.getStorageSync('hasLogin') && uni.getStorageSync("token") !== "") {
+				console.log("没有userinfo")
+				this.getUserInfo();
+				this.hasLogin = true;
+			} else {
+				this.hasLogin = false;
+			}
+		},
+		methods: {
+			toChangePW() {
+				uni.navigateTo({
+					url: "/pages/user-info/changePW/changePW"
+				})
+			},
+			// 输入失去焦点自动保存
+			blur(res, type) {
+				if (res.replaceAll(' ', '') != "") {
+					uni.request({
+						url: 'http://shenmegui1987.xyz:1987/user/updateUsername',
+						method:'Get',
+						data:{
+							"token": uni.getStorageSync("token"),
+							"username": res
+						},
+						success: (res) => {
+							if (res.data.code == 200) {
+								this.userInfo.username = res.data.username;
+								uni.setStorageSync("userInfo", this.userInfo);
+								this.nickname = ""
+								console.log(uni.getStorageSync("userInfo"));
+								uni.showToast({
+									title: "修改成功"
+								})
+							} else {
+								uni.showToast({
+									icon:'error',
+									title: "修改失败"
+								})
+							}
+						}
+					});
+				} else if (res.length > 15) {
+					uni.showToast({
+						icon:"error",
+						title: "输入内容过长"
+					});
+					this.nickname = ""
+				} else {
+					uni.showToast({
+						icon:"error",
+						title: "请输入内容"
+					});
+					this.nickname = ""
+				}
+				
+			},
+			getUserInfo() {
+				uni.request({
+					url: 'http://shenmegui1987.xyz:1987/user/userInfo',
+					method:'GET',
+					header:{
+						"token":uni.getStorageSync("token")
+					},
+					success: (res) => {
+						this.userInfo = res.data.userinfo;
+					}
+				});
+			},
+			
+			// 修改性别
+			saveGender(index) {
+				let gender = index[0].value;
+				this.$H.post("user/userInfoEdit", {
+					gender: gender
+				}).then(res => {
+					if (res.code == 0) {
+						this.userInfo.gender = index[0].label
+					}
+				})
+			},
+			outlogin() {
+				uni.removeStorageSync("hasLogin");
+				uni.removeStorageSync("token");
+				uni.removeStorageSync("userInfo");
+				uni.reLaunch({
+					url: "/pages/tabBar/search"
+				})
+			},
+			onAvatar() {
+				let that = this;
+				uni.chooseImage({
+					count: 1,
+					sizeType: ['original', 'compressed'],
+					sourceType: ['album'],
+					success: function(res) {
+						uni.showLoading({
+							mask: true,
+							title: "上传头像中"
+						})
+						uni.uploadFile({
+							url: 'http://shenmegui1987.xyz:1987/file/upload',
+							filePath: res.tempFilePaths[0],
+							name: 'Image',
+							header: {
+								token: uni.getStorageSync("token")
+							},
+							success: (uploadFileRes) => {
+								that.updateAvatar();
+								uni.hideLoading();
+								uni.showToast({
+									title:"修改成功"
+								})
+							},
+							fail: (res) => {
+								console.log(res.data);
+								uni.hideLoading();
+								uni.showToast({
+									title: res.data.msg
+								})
+							},
+							complete: (res) => {
+								if (res.data.status == 500)
+								console.log("complete:" + JSON.stringify(res.data))
+							}
+							// complete: (res) => {
+							// 	console.log("complete:" + res)
+							// }
+						});
+					}
+				});
+			},
+			updateAvatar() {
+				uni.request({
+					url: 'http://shenmegui1987.xyz:1987/user/userInfo',
+					method:'POST',
+					header:{
+						"token": uni.getStorageSync("token")
+					},
+					success: (res) => {
+						// console.log(res.data.userinfo.avatar);
+						if (res.data.userinfo.avatar !== "") {
+							this.time = new Date().getTime();
+							this.userInfo.avatar = res.data.userinfo.avatar;
+							uni.setStorageSync("userInfo", this.userInfo);
+						}
+					}
+				})
+			}
+		}
+	}
+</script>
+<style scoped>
+	.info-container {
+		padding: 20rpx;
+		margin-top: 10rpx;
+	}
+
+	.out-btn {
+		margin: 40rpx 30rpx;
+	}
+	.slot-box {
+		/* #ifndef APP-NVUE */
+		display: flex;
+		/* #endif */
+		flex-direction: row;
+		align-items: center;
+	}
+
+	.slot-image {
+		/* #ifndef APP-NVUE */
+		display: block;
+		/* #endif */
+		margin-right: 10px;
+		width: 30px;
+		height: 30px;
+	}
+
+	.slot-text {
+		flex: 1;
+		font-size: 14px;
+		margin-right: 10px;
+	}
+	.slot-input {
+		flex: 1;
+		font-size: 14px;
+		text-align: right;
+	}
+</style>

@@ -1,0 +1,42 @@
+<template>
+	<view>
+		<!-- search -->
+		<view v-if="data.length == 0">
+			<view class="uni-box-head">
+				<uni-title type="h3" align="center" title="未找到相关信息"></uni-title>
+			</view>
+		</view>
+		<view v-else>
+			<uni-section :title="item.name" type="line" v-for="(item, index) in data" :key="item.id">
+			<uni-list>
+				<uni-list-item :title="'英文名：' + (item.enName == null ? '无' : item.enName)"></uni-list-item>
+				<uni-list-item :title="'作用：' + (item.func == null ? '无' : item.func)"></uni-list-item>
+				<uni-list-item :title="'简介：' + (item.introduction == null ? '无' : item.introduction)"></uni-list-item>
+			</uni-list>
+		</uni-section>
+		</view>
+	</view>
+	
+</template>
+<script>
+	export default {
+		data() {
+			return {
+				data: [],
+			}
+		},
+		onNavigationBarButtonTap(e) {
+			e.index === 0 ? this.$refs.share.open() : this.$refs.inputDialog.open()
+		},
+		onLoad(option){
+			console.log('上一个页面传递过来的参数', option)
+			console.log(decodeURIComponent(option.data))
+			option = JSON.parse(decodeURIComponent(option.data))
+			this.data = option
+		}
+	}
+</script>
+
+<style>
+	
+</style>
